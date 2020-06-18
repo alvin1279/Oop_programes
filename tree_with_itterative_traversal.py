@@ -1,18 +1,23 @@
-class Root:
+from collections import defaultdict
 
+
+class Root:
     def __init__(self, data=None):
         self.Children = []
         self.Data = data
         self.Depth = 0
-    def setAttribute(self, attribute, data):
+
+    def set_attribute(self, attribute, data):
         self.__dict__[attribute] = data
-    def findDepth(self, initial):
+
+    def find_depth(self, initial):
         self.Depth = initial + 1
-    def addNode(self, Node):
+
+    def add_node(self, Node):
         self.Children.append(Node)
-        Node.findDepth(self.Depth)
-    def printTree(self):
-        dict =[]
+        Node.find_depth(self.Depth)
+
+    def tree_traversal(self):
         current = self
         stack = []
         count = 0
@@ -26,7 +31,7 @@ class Root:
                     current = None
             elif stack:
                 current, _ = stack.pop()
-                dict.append(current.Data)
+                yield current.Data, current.Depth
                 if stack:
                     current, count = stack.pop()
                     count += 1
@@ -34,25 +39,31 @@ class Root:
                     current = None
             else:
                 break
-        print(dict)
+
+    def build_depth_dict(self):
+        treedict = defaultdict(list)
+        for (node, depth) in self.tree_traversal():
+            treedict[depth].append(node)
+        return treedict
 
 
 a = Root(20)
 
 b = Root(30)
 c = Root(40)
-a.addNode(b)
-a.addNode(c)
+a.add_node(b)
+a.add_node(c)
 
 h = Root(12)
 i = Root(33)
 j = Root(11)
-k = Root(0)
-j.addNode(k)
 
-b.addNode(h)
-b.addNode(i)
-a.addNode(j)
+b.add_node(h)
+b.add_node(i)
+a.add_node(j)
+
+k = Root(0)
+i.add_node(k)
 """
                             20(a)
                           /   |   \
@@ -63,4 +74,4 @@ a.addNode(j)
                              \
                               0(k)
 """
-a.printTree()
+print(a.build_depth_dict())
