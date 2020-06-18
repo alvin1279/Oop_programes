@@ -12,36 +12,29 @@ class Root:
         self.Children.append(Node)
         Node.findDepth(self.Depth)
     def printTree(self):
-        dict ={}
+        dict =[]
         current = self
         stack = []
         count = 0
         while True:
             if current is not None:
                 stack.append([current,count])
-                try:
+                if len(current.Children)>count:
                     current = current.Children[count]
-                except:
+                    count = 0
+                else:
                     current = None
             elif stack:
-                current,_= stack.pop()
-                try:
-                    dict[current.Depth] += [current.Data]
-                except:
-                    dict[current.Depth] = [current.Data]
-                try:
-                    current.Children[count]
-                except:
-                    current = None
+                current,_ = stack.pop()
+                dict.append(current.Data)
                 if stack:
-                    stack[-1][-1] += 1
-                    count = stack[-1][-1]
-
+                    current,count=stack.pop()
+                    count+=1
+                else:
+                    current = None
             else:
                 break
         print(dict)
-
-
 a = Root(20)
 
 b = Root(30)
@@ -52,16 +45,20 @@ a.addNode(c)
 h = Root(12)
 i = Root(33)
 j = Root(11)
+k = Root(0)
+j.addNode(k)
+
 b.addNode(h)
 b.addNode(i)
 a.addNode(j)
 """
-                            20
-                          /  |  \
-                         /   |   \
-                       30    40   12
-                      /  \
-                    12   33
-
+                            20(a)
+                          /   |   \
+                         /    |    \
+                      30(b)  40(c)  11(j)
+                       /  \
+                   12(h)   33(i)
+                             \
+                              0(k)
 """
 a.printTree()
