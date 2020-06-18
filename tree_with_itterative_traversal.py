@@ -1,14 +1,14 @@
 class Root:
 
-    def __init__(self,Data=None):
+    def __init__(self, data=None):
         self.Children = []
-        self.Data = Data
+        self.Data = data
         self.Depth = 0
-    def setAttribute(self,attribute,data):
+    def setAttribute(self, attribute, data):
         self.__dict__[attribute] = data
     def findDepth(self, initial):
         self.Depth = initial + 1
-    def addNode(self,Node):
+    def addNode(self, Node):
         self.Children.append(Node)
         Node.findDepth(self.Depth)
     def printTree(self):
@@ -18,23 +18,25 @@ class Root:
         count = 0
         while True:
             if current is not None:
-                stack.append([current,count])
-                if len(current.Children)>count:
+                stack.append([current, count])
+                if len(current.Children) > count:
                     current = current.Children[count]
                     count = 0
                 else:
                     current = None
             elif stack:
-                current,_ = stack.pop()
+                current, _ = stack.pop()
                 dict.append(current.Data)
                 if stack:
-                    current,count=stack.pop()
-                    count+=1
+                    current, count = stack.pop()
+                    count += 1
                 else:
                     current = None
             else:
                 break
         print(dict)
+
+
 a = Root(20)
 
 b = Root(30)
