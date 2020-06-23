@@ -32,7 +32,7 @@ class Root:
 
     # Method to set or update the depth of a leaf/Node/Tree and its children if any exists
     def set_depth(self):
-        # The node depth is just parent depth + 1
+
         self.Depth = self.Parent.Depth + 1
         # The depth of the child nodes are also updated if children exists
         if self.Children:
