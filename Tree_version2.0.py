@@ -107,8 +107,7 @@ b.add_tree(h)
 b.add_tree(i)
 a.add_tree(j)
 
-k = Root(0)
-i.add_tree(k)
+i.add_leaf(0)
 """
                             20(a)
                           /   |   \
@@ -117,6 +116,6 @@ i.add_tree(k)
                        /  \
                    12(h)   33(i)
                              \
-                              0(k)
+                              0(leaf)
 """
 print(a.build_depth_dict())
