@@ -49,7 +49,7 @@ class Root:
         while True:
 
             if current is not None:
-                # Adds to the stack the current Node, and whatever the current index value is, initialised to zero
+                # Adds to the stack the current Node, and whatever the current index value is
                 stack.append([current, index])
                 if len(current.Children) > index:
                     current = current.Children[index]  # Goes down the Node to the child at that index
