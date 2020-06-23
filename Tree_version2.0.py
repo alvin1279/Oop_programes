@@ -32,7 +32,7 @@ class Root:
 
     # Method to set or update the depth of a leaf/Node/Tree and its children if any exists
     def set_depth(self):
-
+        # The node depth is just parent depth + 1
         self.Depth = self.Parent.Depth + 1
         # The depth of the child nodes are also updated if children exists
         if self.Children:
@@ -84,12 +84,11 @@ class Root:
 
 
 # Node class is use to make nodes, it inherits the the methods of root but the instance initialisation is changed
-# Node has parent and a Depth which is initialised to 1 then real depth is found using the set_depth method
+# Node has a Parent, The depth is found using the set_depth method
 class Node(Root):
     def __init__(self, data, parent):
         super().__init__(data)
         self.Parent = parent
-        self.Depth = 1
         self.set_depth()
 
 
