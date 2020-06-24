@@ -20,7 +20,7 @@ class Root:
         Node.set_depth()
         self.Children.append(Node)
 
-    # This function is used to add single unnamed nodes, by just providing the data for it
+    # This is used to add single unnamed nodes, by just providing the data for it
     def add_leaf(self, data):
         self.Children.append(Root(data, self))
         self.Children[-1].set_depth()
@@ -34,8 +34,9 @@ class Root:
 
         while True:
 
+            # Adds to the stack the current Node, and whatever the current index value is , Index values determines
+            # which path to go down if a path is non existent for that index it activates the next conditional
             if current is not None:
-                # Adds to the stack the current Node, and whatever the current index value is
                 stack.append([current, index])
                 if len(current.Children) > index:
                     current = current.Children[index]  # Goes down the Node to the child at that index
@@ -44,21 +45,20 @@ class Root:
                     current = None
                     # Note that index is not initialised to zero since it will be updated in the below elif statement
 
-            # This conditional activates when the current stack top has no children or index goes out of bound for it
+            # This conditional activates when there is no more going down a path
             elif stack:
-                current, _ = stack.pop()
-                yield current   # yields the value to whatever function that called tree traversal
+                current, _ = stack.pop()  # The Node with no more down paths are removed
+                yield current
                 if stack:
-                    current, index = stack.pop()  # The stack is popped again
-                    index += 1  # The index is updates
-                    # Updated index and current Node will be added to stack in above if statement
+                    current, index = stack.pop()
+                    index += 1  # The index is incremented since previous path in tree is exhausted
                 else:
                     current = None
-                    # This will only activate when tree is exhausted
+                    # When the stack is exhausted current has to be set to None or it will keep adding old current to
+                    # stack and it will keep on looping
             else:
                 break
 
-    # A function to make a dictionary with depth and list with all Node data at that depth
     def build_depth_dict(self):
         treedict = defaultdict(list)
         for Node in self.tree_traversal():
