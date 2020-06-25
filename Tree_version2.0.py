@@ -9,11 +9,6 @@ class Root:
         self.Parent = parent
         self.Depth = 0
 
-    def set_depth(self):
-        parent_depth = self.Parent.Depth
-        for Node in self.tree_traversal():
-            Node.Depth = parent_depth + Node.Depth + 1
-
     # This is used to add Tree as a node
     def add_node(self, Node):
         Node.Parent = self
@@ -25,9 +20,12 @@ class Root:
         self.Children.append(Root(data, self))
         self.Children[-1].set_depth()
 
-    # An iterative method to traverse the Tree
-    # The traversal is mostly called by other methods such as method : build_depth_dict
-    def tree_traversal(self):
+    def set_depth(self):
+        parent_depth = self.Parent.Depth
+        for Node in self.tree_traversal_iterative():
+            Node.Depth = parent_depth + Node.Depth + 1
+
+    def tree_traversal_iterative(self):
         current = self
         stack = []  # Stack will consist of a Node and the index
         index = 0
@@ -59,9 +57,16 @@ class Root:
             else:
                 break
 
+    def tree_traversal_recursive(self):
+        yield self
+        if self.Children:
+            for child in self.Children:
+                yield child.tree_traversal_recursive()
+
+    # Returns a dictionary with key as depth and the values at that depth using iterative tree traversal
     def build_depth_dict(self):
         treedict = defaultdict(list)
-        for Node in self.tree_traversal():
+        for Node in self.tree_traversal_iterative():
             treedict[Node.Depth].append(Node.Data)
         return treedict
 
