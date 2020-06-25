@@ -3,7 +3,7 @@ from collections import defaultdict
 
 class Root:
 
-    def __init__(self, data=None, parent=None):
+    def __init__(self, data, parent=None):
         self.Children = []
         self.Data = data
         self.Parent = parent
